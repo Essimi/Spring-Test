@@ -10,7 +10,7 @@ import kr.or.ddit.vo.PagingVO;
 public interface EmployeeDAO {
 	
 	public int insertEmployee(EmployeeDAO employee);
-	public List<EmployeeVO> selectEmployeeList(@Param("PagingVO") PagingVO<EmployeeVO> pagingVO); // 페이징 처리 필요
+	public List<EmployeeVO> selectEmployeeList(@Param("pagingVO") PagingVO<EmployeeVO> pagingVO); // 페이징 처리 필요
 	public int selectTotalRecord(PagingVO<EmployeeVO> pagingVO); // 페이징 처리를 위한 메소드
 	public EmployeeVO selectEmployee(String empId); // 직원 개인 정보
 	public int updateEmployee(EmployeeVO employee);

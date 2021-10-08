@@ -22,9 +22,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public List<EmployeeVO> retrieveEmployeeList(PagingVO<EmployeeVO> pagingVO) {
 		
 		int totalRecord = dao.selectTotalRecord(pagingVO);
-		
-		pagingVO.setTotalRecord(totalRecord);
-		
+				
 		List<EmployeeVO> employeeList = dao.selectEmployeeList(pagingVO);
 		
 		if(pagingVO != null) {

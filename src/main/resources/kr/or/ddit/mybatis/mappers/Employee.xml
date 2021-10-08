@@ -9,20 +9,20 @@
    
    <select id = "selectEmployeeList" parameterType = "PagingVO" resultType = "EmployeeVO">
       SELECT E.*
-      FROM(    
-          SELECT D.*, ROWNUM RNUM
-          FROM(    
-              SELECT EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER,
-                  HIRE_DATE, A.MANAGER_ID,
-                  (SELECT COUNT(*) FROM EMPLOYEE C WHERE A.EMPLOYEE_ID = C.MANAGER_ID) CHILD_COUNT
-                  , B.DEPARTMENT_ID "department.departmentId"
-                  , DEPARTMENT_NAME "department.departmentName"
-                  , LOCATION_ID 	"department.locationId"
-              FROM EMPLOYEE A LEFT OUTER JOIN DEPARTMENT B 
-                  ON(A.DEPARTMENT_ID = B.DEPARTMENT_ID)
-              ORDER BY HIRE_DATE ASC
-          ) D
-      ) E
+		FROM (
+		    SELECT D.*, ROWNUM RNUM
+		    FROM (
+		        SELECT EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, 
+		            HIRE_DATE, A.MANAGER_ID , 
+		            (SELECT COUNT(*) FROM EMPLOYEE C WHERE A.EMPLOYEE_ID = C.MANAGER_ID) CHILD_COUNT
+		            , B.DEPARTMENT_ID "department.departmentId"
+		            , DEPARTMENT_NAME "department.departmentName"
+		            , LOCATION_ID  "department.locationId"
+		        FROM EMPLOYEE A LEFT OUTER JOIN DEPARTMENT B 
+		            ON (A.DEPARTMENT_ID = B.DEPARTMENT_ID)
+		        ORDER BY HIRE_DATE ASC
+		    ) D
+		) E
       <where>
       	<if test = "pagingVO neq null and pagingVO.startRow gt 0 and pagingVO.endRow gt 0">
       		<![CDATA[

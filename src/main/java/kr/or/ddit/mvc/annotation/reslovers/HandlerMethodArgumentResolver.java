@@ -12,5 +12,5 @@ public interface HandlerMethodArgumentResolver {
 	public boolean isSuppoited(Parameter parameter);
 
 	public Object argumentResolve(Parameter parameter, HttpServletRequest req, HttpServletResponse resp) 
-															throws ServletException, IOException;
+										throws ServletException, IOException;
 }

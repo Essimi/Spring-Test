@@ -21,7 +21,7 @@ import kr.or.ddit.mvc.annotation.stereotype.RequestMapping;
 import kr.or.ddit.vo.MemberVO;
 
 @Controller
-public class LoginProcessServlet extends HttpServlet{
+public class LoginProcessController{
 	
 	private AuthenticateService service = new AuthenticateServiceImpl();
 	
@@ -38,10 +38,10 @@ public class LoginProcessServlet extends HttpServlet{
 		if(valid) {
 			ServiceResult result = service.authenticated(member);
 			if(ServiceResult.OK.equals(result)) {
-				location = "/index.jsp";
+				location = "redirect:/index.jsp";
 				session.setAttribute("authMember", member);
 			}else {
-				location = "/login/loginForm.jsp";
+				location = "redirect:/login/loginForm.jsp";
 				session.setAttribute("failId", member.getMemId());
 				if(ServiceResult.NOTEXIST.equals(result)) {
 					message = "아이디가 잘못됐음. 확인하셈.";
@@ -52,12 +52,24 @@ public class LoginProcessServlet extends HttpServlet{
 			}
 		}else {
 //			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
-			location = "/login/loginForm.jsp";
+			location = "redirect:/login/loginForm.jsp";
 			message = "아이디나 비번이 누락됐음.";
 		}
 		
 		session.setAttribute("message", message);
+		return location;
 		
+	}
+	
+	private boolean validate(MemberVO member) {
+		boolean valid = true;
+		if(StringUtils.isBlank(member.getMemId())) {
+			valid = false;
+		}
+		if(StringUtils.isBlank(member.getMemPass())) {
+			valid = false;
+		}
+		return valid;
 	}
 
 	
