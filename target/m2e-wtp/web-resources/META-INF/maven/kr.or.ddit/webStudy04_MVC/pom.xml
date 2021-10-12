@@ -46,14 +46,13 @@
 			<version>2.3.1</version>
 			<scope>provided</scope>
 		</dependency>
-		
 		<!-- JSTL(Jsp Standard Tag Library) -->
 		<dependency>
-    		<groupId>javax.servlet</groupId>
-   		 	<artifactId>jstl</artifactId>
-   			 <version>1.2</version>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
 		</dependency>
-		
+
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -77,6 +76,13 @@
 					<artifactId>commons-logging</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+
+		<!-- servlet 2.5 -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.4</version>
 		</dependency>
 
 
@@ -110,16 +116,15 @@
 		</dependency>
 		<!-- 객체 검증 -->
 		<dependency>
-    		<groupId>org.hibernate.validator</groupId>
-   			<artifactId>hibernate-validator</artifactId>
-    		<version>6.2.0.Final</version>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>6.2.0.Final</version>
 		</dependency>
 		<dependency>
-    		<groupId>org.glassfish</groupId>
-    		<artifactId>jakarta.el</artifactId>
-    		<version>3.0.3</version>
+			<groupId>org.glassfish</groupId>
+			<artifactId>jakarta.el</artifactId>
+			<version>3.0.3</version>
 		</dependency>
-
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
@@ -154,7 +159,6 @@
 			<version>4.13.2</version>
 			<scope>test</scope>
 		</dependency>
-
 	</dependencies>
 </project>
 

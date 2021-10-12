@@ -31,7 +31,7 @@
     			"url": "${pageContext.request.contextPath }/emp/employeeList.do",
     			"dataSrc":"dataList"
     		},
-    		"columns": [
+    		"columns": [ // 비동기 요청.
                 { "data": "employeeId" },
                 { "data": "firstName" },
                 { "data": "lastName" },
@@ -39,7 +39,7 @@
                 { "data": "managerId" },
                 { "data" : "department.departmentName" },
                 { "data": "hireDate" },
-                { "data": "childCount" }
+                { "data": "childCount" } // 부하직원수
             ]
     	});
     </script>

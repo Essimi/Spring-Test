@@ -14,13 +14,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.or.ddit.employee.service.EmployeeService;
 import kr.or.ddit.employee.service.EmployeeServiceImpl;
-import kr.or.ddit.mvc.annotation.reslovers.ModelAttribute;
 import kr.or.ddit.mvc.annotation.reslovers.RequestHeader;
-import kr.or.ddit.mvc.annotation.reslovers.RequestParam;
 import kr.or.ddit.mvc.annotation.stereotype.Controller;
 import kr.or.ddit.mvc.annotation.stereotype.RequestMapping;
-import kr.or.ddit.prod.dao.OthersDAO;
-import kr.or.ddit.prod.dao.OthersDAOImpl;
 import kr.or.ddit.vo.EmployeeVO;
 import kr.or.ddit.vo.PagingVO;
 
@@ -29,6 +25,8 @@ import kr.or.ddit.vo.PagingVO;
 public class EmployeeRetrieveController {
 	
 	private EmployeeService service = new EmployeeServiceImpl();
+	
+	
 	
 	
 //	// 동기 요청 구조
