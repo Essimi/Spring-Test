@@ -1,56 +1,57 @@
 package kr.or.ddit.prod.controller;
 
+import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.beanutils.BeanUtils;
 
 import kr.or.ddit.enumpkg.ServiceResult;
 import kr.or.ddit.mvc.annotation.RequestMethod;
+import kr.or.ddit.mvc.annotation.resolvers.ModelAttribute;
+import kr.or.ddit.mvc.annotation.resolvers.RequestPart;
 import kr.or.ddit.mvc.annotation.stereotype.Controller;
 import kr.or.ddit.mvc.annotation.stereotype.RequestMapping;
-import kr.or.ddit.prod.dao.OthersDAO;
-import kr.or.ddit.prod.dao.OthersDAOImpl;
+import kr.or.ddit.mvc.fileupload.MultipartFile;
 import kr.or.ddit.prod.service.ProdService;
 import kr.or.ddit.prod.service.ProdServiceImpl;
 import kr.or.ddit.util.ValidateUtils;
 import kr.or.ddit.validate.groups.InsertGroup;
-import kr.or.ddit.vo.MemberVO;
 import kr.or.ddit.vo.ProdVO;
 
-@Controller 
+@Controller
 public class ProdInsertController{
 	private ProdService service = new ProdServiceImpl();
+	
+	private String saveFolderURL = "/resources/prodImages";
 
-	@RequestMapping("/prod/prodForm.do") // 핸들러매핑이 해당주소를 트레이싱
-	public String prodForm(HttpServletRequest req, HttpServletResponse resp) {
-		
-		return "prod/prodForm.do"; // 핸들러어댑터가 가져가고, 프론트에 넘기고, 뷰리절브에 넘김
-		
-		
+	@RequestMapping("/prod/prodInsert.do")
+	public String prodForm() {
+		return "prod/prodForm";
 	}
 	
-	@RequestMapping(value = "/prod/prodForm.do", method = RequestMethod.POST)
-	public String process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	@RequestMapping(value="/prod/prodInsert.do", method=RequestMethod.POST)
+	public String process(@ModelAttribute("prod") ProdVO prod, 
+			@RequestPart("prodImage") MultipartFile prodImage,
+			HttpServletRequest req) throws IOException{
 		
-		ProdVO prod = new ProdVO();
-		req.setAttribute("prod", prod);
-		
-		Map<String, String[]> paramterMap = req.getParameterMap();
-		try {
-			BeanUtils.populate(prod, paramterMap);
-		} catch (IllegalAccessException | InvocationTargetException e) {
-			throw new ServletException(e);
+		if(!prodImage.isEmpty()) {
+			prod.setProdImage(prodImage);
+			
+			File saveFolder = new File(req.getServletContext().getRealPath(saveFolderURL));
+			if(!saveFolder.exists()) {
+				saveFolder.mkdirs();
+			}
+			String saveName = UUID.randomUUID().toString();
+			File dest = new File(saveFolder, saveName);
+			prodImage.transferTo(dest);
+			
+			prod.setProdImg(saveName);
 		}
+		
 		Map<String, List<String>> errors = new LinkedHashMap<>();
 		req.setAttribute("errors", errors);
 		boolean valid = ValidateUtils.validate(prod, errors, InsertGroup.class);

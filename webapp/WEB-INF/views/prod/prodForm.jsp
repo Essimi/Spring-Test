@@ -9,7 +9,7 @@
 </head>
 <body>
 
-	<form method="post">
+	<form method="post" enctype="multipart/form-data">
 		<table>
 		<tr>
 			<th>상품코드</th>
@@ -63,9 +63,8 @@
 				value="${prod.prodDetail}" /><span class="error">${errors.prodDetail }</span></td>
 		</tr>
 		<tr>
-			<th>이미지경로</th>
-			<td><input type="text" name="prodImg" 
-				value="${prod.prodImg}" /><span class="error">${errors.prodImg }</span></td>
+			<th>이미지</th>
+			<td><input type="file" name="prodImage" accept="image/*"/><span class="error">${errors.prodImage }, ${errors.prodImg }</span></td>
 		</tr>
 		<tr>
 			<th>재고</th>

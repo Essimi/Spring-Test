@@ -1,4 +1,4 @@
-package kr.or.ddit.mvc.annotation.reslovers;
+package kr.or.ddit.mvc.annotation.resolvers;
 
 public class BadRequestException  extends RuntimeException{
 	// 필수 파라메터가 누락일 때, 에러 발생을 위한 클래스

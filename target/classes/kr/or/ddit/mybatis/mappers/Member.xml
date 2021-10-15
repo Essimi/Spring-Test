@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ddit.member.dao.MemberDAO">
 	<select id="selectMemberForAuth" parameterType="string" resultType="MemberVO">
-		SELECT MEM_ID, MEM_PASS, MEM_NAME           
+		SELECT MEM_ID, MEM_PASS, MEM_NAME, MEM_ROLE          
 		FROM MEMBER                            
 		WHERE MEM_ID = #{memId} AND MEM_DELETE IS NULL
 	</select>
@@ -68,7 +68,7 @@
 			    MEM_HOMETEL,    MEM_COMTEL,    MEM_HP,                                      
 			    MEM_MAIL,    MEM_JOB,    MEM_LIKE,                                          
 			    MEM_MEMORIAL,    TO_CHAR(MEM_MEMORIALDAY, 'YYYY-MM-DD') MEM_MEMORIALDAY,    
-			    MEM_MILEAGE,    MEM_DELETE                             
+			    MEM_MILEAGE,    MEM_DELETE, MEM_ROLE    , MEM_IMG                      
 			    , CART_PROD                     
 			FROM    MEMBER LEFT OUTER JOIN CART ON(MEM_ID = CART_MEMBER)                                                               
 			WHERE MEM_ID = #{memId}  
@@ -90,7 +90,11 @@
 		    MEM_ZIP,    MEM_ADD1,    MEM_ADD2,                 
 		    MEM_HOMETEL,    MEM_COMTEL,    MEM_HP,             
 		    MEM_MAIL,    MEM_JOB,    MEM_LIKE,                 
-		    MEM_MEMORIAL,    MEM_MEMORIALDAY,    MEM_MILEAGE   
+		    MEM_MEMORIAL,    MEM_MEMORIALDAY,    MEM_MILEAGE,
+		    MEM_ROLE
+		    <if test = "memImg neq null and memImg.length gt 0" >
+		    	,MEM_IMG
+		    </if>
 		) VALUES (                                             
 			#{memId,jdbcType=VARCHAR},
 			#{memPass,jdbcType=VARCHAR},
@@ -109,7 +113,11 @@
 			#{memLike,jdbcType=VARCHAR},
 			#{memMemorial,jdbcType=VARCHAR},
 			TO_DATE(#{memMemorialday,jdbcType=DATE}, 'YYYY-MM-DD'),
-			3000
+			3000,
+			'ROLE_USER'
+			 <if test = "memImg neq null and memImg.length gt 0" >
+				,#{memImg,jdbcType=BLOB}
+			</if>
 		)                                                      
 	</insert>
 	<update id="updateMember" parameterType="MemberVO">
@@ -128,6 +136,9 @@
 			MEM_LIKE = #{memLike,jdbcType=VARCHAR},
 			MEM_MEMORIAL = #{memMemorial,jdbcType=VARCHAR},
 			MEM_MEMORIALDAY = #{memMemorialday,jdbcType=DATE}
+			 <if test = "memImg neq null and memImg.length gt 0" >
+				,MEM_IMG =#{memImg,jdbcType=BLOB}
+			</if>
 		WHERE MEM_ID = #{memId}
 	</update>
 	<delete id="deleteMember" parameterType="string">

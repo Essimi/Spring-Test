@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/core"  prefix = "c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,31 +21,31 @@
 		</tr>
 	</thead>
 	<tbody id="listBody">
-
+		
 	</tbody>
 	<tfoot>
 		<tr>
 			<td colspan="6">
 				<div id="pagingArea">
-				${pagingVO.pagingHTML} 
+					${pagingVO.pagingHTML }
 				</div>
 				<div id="searchUI">
 					<select name="prodLgu" id="prodLgu">
 						<option value>상품분류</option>
-						<c:forEach items = "${lprodList}" var = "lprod">
-							<option value = "${lprod['lprodGu'] }">${lprod.lprodNm }</option>
+						<c:forEach items="${lprodList }" var="lprod">
+							<option value="${lprod['lprodGu'] }">${lprod.lprodNm }</option>
 						</c:forEach>
 					</select>
 					<select name="prodBuyer" id="prodBuyer">
 						<option value>거래처</option>
-						<c:forEach items = "${buyerList}" var = "buyer">
-							<option value = "${buyer.buyerId}" class = "${buyer.buyerLgu}">${buyer.buyerName}</option>
+						<c:forEach items="${buyerList }" var="buyer">
+							<option value="${buyer.buyerId }" class="${buyer.buyerLgu }">${buyer.buyerName }</option>
 						</c:forEach>
 					</select>
 					<input type="text" name="prodName" />
 					<input type="button" id="searchBtn" value="검색" />
 					<input type="button" class="linkBtn" 
-						data-gopage="${pageContext.request.contextPath}/prod/prodInsert.do" value="신규등록" />
+						data-gopage="${pageContext.request.contextPath }/prod/prodInsert.do" value="신규등록" />
 				</div>
 			</td>
 		</tr>
@@ -57,7 +57,7 @@
 	<input type="hidden" name="prodBuyer" />
 	<input type="hidden" name="prodName" />
 </form>
-<script type="text/javascript" src = "${pageContext.request.contextPath}/resources/js/custom/paging.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/custom/paging.js"></script>
 <script type="text/javascript">
 	$("[name='prodLgu']").val("${pagingVO.detailSearch.prodLgu}");
 	$("[name='prodBuyer']").val("${pagingVO.detailSearch.prodBuyer}");
@@ -101,7 +101,7 @@
 						$("<td>").html(
 							$("<a>").text(prod.prodName)
 									.attr({
-										href:"${pageContext.request.contextPath}/prod/prodView.do?what="+prod.prodId,
+										href:"${pageContext.request.contextPath }/prod/prodView.do?what="+prod.prodId,
 										title:"구매자수 : "+prod.memCount
 									})
 						),	

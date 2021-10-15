@@ -1,9 +1,12 @@
 package kr.or.ddit.vo;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.http.HttpSessionBindingEvent;
+import javax.servlet.http.HttpSessionBindingListener;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -12,6 +15,10 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.validation.groups.Default;
 
+import org.apache.commons.codec.binary.Base64;
+
+import kr.or.ddit.mvc.fileupload.MultipartFile;
+import kr.or.ddit.validate.constraints.FileMimeChecker;
 import kr.or.ddit.validate.constraints.TelNumber;
 import kr.or.ddit.validate.groups.DeleteGroup;
 import kr.or.ddit.validate.groups.InsertGroup;
@@ -50,7 +57,7 @@ import lombok.ToString;
 @ToString(exclude= {"memRegno1", "memRegno2", "memPass"})
 @EqualsAndHashCode(of= {"memId"})
 @NoArgsConstructor
-public class MemberVO implements Serializable {
+public class MemberVO implements Serializable, HttpSessionBindingListener {
 	
 	public MemberVO(String memId, String memPass) {
 		super();
@@ -101,6 +108,63 @@ public class MemberVO implements Serializable {
 	private String memDelete;
 	
 	private Set<ProdVO> prodList; // 구매 상품 목록, has many 관계(1:N)
+	
+	private String memRole;
+	
+	private byte[] memImg; // 이진데이터 처리용
+	
+	@FileMimeChecker(mime = "image/")
+	private MultipartFile memImage;
+	public void setMemImage(MultipartFile memImage) throws IOException {
+		
+		if(memImage == null || memImage.isEmpty()) return;
+		
+		this.memImage = memImage;
+		
+		memImg = memImage.getBytes();
+	}
+	
+	public String getBase64Image() {
+		
+		if(memImg == null) {
+			return null;
+		}else {
+			return 	Base64.encodeBase64String(memImg);
+		}
+		
+		
+		
+		
+	}
+
+	@Override
+	public void valueBound(HttpSessionBindingEvent event) {
+		
+		String attrName = event.getName();
+		
+		if("authMember".equals(attrName)) {
+			
+			Set<MemberVO> userList =  (Set)event.getSession().getServletContext().getAttribute("userList");
+			
+			userList.add(this);
+			
+		}
+		
+	}
+
+	@Override
+	public void valueUnbound(HttpSessionBindingEvent event) {
+		
+		String attrName = event.getName();
+		
+		if("authMember".equals(attrName)) {
+			
+			Set<MemberVO> userList =  (Set)event.getSession().getServletContext().getAttribute("userList");
+			
+			userList.remove(this);
+		}
+		
+	}
 }
 
 

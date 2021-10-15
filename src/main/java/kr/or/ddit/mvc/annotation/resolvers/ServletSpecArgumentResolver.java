@@ -1,4 +1,4 @@
-package kr.or.ddit.mvc.annotation.reslovers;
+package kr.or.ddit.mvc.annotation.resolvers;
 
 import java.io.IOException;
 import java.lang.reflect.Parameter;
@@ -12,7 +12,7 @@ public class ServletSpecArgumentResolver implements HandlerMethodArgumentResolve
 	// 리퀘스트, 리스폰스, 세션 처리 클래스
 
 	@Override
-	public boolean isSuppoited(Parameter parameter) {
+	public boolean isSupported(Parameter parameter) {
 		
 		Class<?> parameterType = parameter.getType(); // 클래스 형태를 가져옴, 리퀘스트인지 리스폰스인지 세션인지
 		

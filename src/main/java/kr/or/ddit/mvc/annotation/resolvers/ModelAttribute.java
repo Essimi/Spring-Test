@@ -1,4 +1,4 @@
-package kr.or.ddit.mvc.annotation.reslovers;
+package kr.or.ddit.mvc.annotation.resolvers;
 
 import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.*;

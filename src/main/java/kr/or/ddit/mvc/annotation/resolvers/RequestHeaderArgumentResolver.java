@@ -1,4 +1,4 @@
-package kr.or.ddit.mvc.annotation.reslovers;
+package kr.or.ddit.mvc.annotation.resolvers;
 
 import java.io.IOException;
 
@@ -20,7 +20,7 @@ import org.apache.commons.lang3.StringUtils;
 public class RequestHeaderArgumentResolver implements HandlerMethodArgumentResolver {
 
 	@Override
-	public boolean isSuppoited(Parameter parameter) {
+	public boolean isSupported(Parameter parameter) {
 		
 		Class<?> headerType = parameter.getType();
 		

@@ -6,9 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<jsp:include page="/includee/preScript.jsp"></jsp:include>
 </head>
 <body>
-	<jsp:useBean id="prod" type="kr.or.ddit.vo.ProdVO" scope="request" />
 	<table>
 		<tr>
 			<th>상품코드</th>
@@ -64,8 +64,8 @@
 			<td>${prod.prodDetail}</td>
 		</tr>
 		<tr>
-			<th>이미지경로</th>
-			<td>${prod.prodImg}</td>
+			<th>이미지</th>
+			<td><img src = "${pageContext.request.contextPath }/resources/prodImages/${prod.prodImg}"/></td>
 		</tr>
 		<tr>
 			<th>재고</th>
@@ -108,6 +108,14 @@
 			<td>${prod.prodMileage}</td>
 		</tr>
 		<tr>
+			<td colspan = "2">
+				<c:url value = "/prod/prodUpdate.do" var = "updateURL">
+					<c:param name = "what" value = "${prod.prodId }"></c:param>
+				</c:url>
+				<input type = "button" class = "linkBtn" data-gopage = "${updateURL }" value = "상품 수정"/>
+			</td>
+		</tr>	
+		<tr>
 			<th>구매자정보</th>
 			<td>
 				<table>
@@ -141,6 +149,7 @@
 			</td>
 		</tr>
 	</table>
+	<jsp:include page = "/includee/postScript.jsp"></jsp:include>
 </body>
 </html>
 

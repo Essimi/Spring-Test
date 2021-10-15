@@ -21,9 +21,11 @@ import kr.or.ddit.enumpkg.ServiceResult;
 import kr.or.ddit.member.service.MemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
 import kr.or.ddit.mvc.annotation.RequestMethod;
-import kr.or.ddit.mvc.annotation.reslovers.ModelAttribute;
+import kr.or.ddit.mvc.annotation.resolvers.ModelAttribute;
+import kr.or.ddit.mvc.annotation.resolvers.RequestPart;
 import kr.or.ddit.mvc.annotation.stereotype.Controller;
 import kr.or.ddit.mvc.annotation.stereotype.RequestMapping;
+import kr.or.ddit.mvc.fileupload.MultipartFile;
 import kr.or.ddit.util.ValidateUtils;
 import kr.or.ddit.validate.groups.UpdateGroup;
 import kr.or.ddit.vo.MemberVO;
@@ -43,7 +45,10 @@ private MemberService service = new MemberServiceImpl();
 	}
 	
 	@RequestMapping(value = "/member/memberUpdate.do", method = RequestMethod.POST)
-	public String process(@ModelAttribute("member") MemberVO member, HttpServletRequest req){
+	public String process(@ModelAttribute("member") MemberVO member, 
+						@RequestPart(value = "memImage", required = false) MultipartFile memImage, HttpServletRequest req) throws IOException{
+		
+		member.setMemImage(memImage);
 		
 		Map<String, List<String>> errors = new LinkedHashMap<>();
 		req.setAttribute("errors", errors);

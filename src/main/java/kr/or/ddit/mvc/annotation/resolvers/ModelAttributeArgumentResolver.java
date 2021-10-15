@@ -1,4 +1,4 @@
-package kr.or.ddit.mvc.annotation.reslovers;
+package kr.or.ddit.mvc.annotation.resolvers;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -16,7 +16,7 @@ public class ModelAttributeArgumentResolver implements HandlerMethodArgumentReso
 	// 	파라메터가 모델어트리뷰트를 가지고 있을때
 
 	@Override
-	public boolean isSuppoited(Parameter parameter) {
+	public boolean isSupported(Parameter parameter) {
 		
 		Class<?> parameterType = parameter.getType();
 		

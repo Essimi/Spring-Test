@@ -11,12 +11,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.or.ddit.mvc.annotation.reslovers.BadRequestException;
-import kr.or.ddit.mvc.annotation.reslovers.HandlerMethodArgumentResolver;
-import kr.or.ddit.mvc.annotation.reslovers.ModelAttributeArgumentResolver;
-import kr.or.ddit.mvc.annotation.reslovers.RequestHeaderArgumentResolver;
-import kr.or.ddit.mvc.annotation.reslovers.RequestParamArgumentResolver;
-import kr.or.ddit.mvc.annotation.reslovers.ServletSpecArgumentResolver;
+import kr.or.ddit.mvc.annotation.resolvers.BadRequestException;
+import kr.or.ddit.mvc.annotation.resolvers.HandlerMethodArgumentResolver;
+import kr.or.ddit.mvc.annotation.resolvers.ModelAttributeArgumentResolver;
+import kr.or.ddit.mvc.annotation.resolvers.RequestHeaderArgumentResolver;
+import kr.or.ddit.mvc.annotation.resolvers.RequestParamArgumentResolver;
+import kr.or.ddit.mvc.annotation.resolvers.RequestPartArgumentResolver;
+import kr.or.ddit.mvc.annotation.resolvers.ServletSpecArgumentResolver;
 
 public class RequestMappingHandlerAdapter implements HandlerAdapter {
 	List<HandlerMethodArgumentResolver> argumentResolver;
@@ -28,6 +29,7 @@ public class RequestMappingHandlerAdapter implements HandlerAdapter {
 		argumentResolver.add(new ServletSpecArgumentResolver());
 		argumentResolver.add(new RequestParamArgumentResolver());
 		argumentResolver.add(new RequestHeaderArgumentResolver());
+		argumentResolver.add(new RequestPartArgumentResolver());
 	}
 	
 	
@@ -36,7 +38,7 @@ public class RequestMappingHandlerAdapter implements HandlerAdapter {
 		HandlerMethodArgumentResolver finded = null;
 		
 		for(HandlerMethodArgumentResolver resolver : argumentResolver) {
-			if(resolver.isSuppoited(parameter)) {
+			if(resolver.isSupported(parameter)) {
 				finded = resolver;
 				break;
 			}

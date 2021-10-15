@@ -1,105 +1,103 @@
-<%@page import="java.util.Set"%>
-<%@page import="kr.or.ddit.vo.ProdVO"%>
-<%@page import="java.util.List"%>
-<%@page import="org.apache.commons.lang3.StringUtils"%>
-<%@page import="kr.or.ddit.vo.MemberVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>   
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<jsp:include page="/includee/preScript.jsp" />
 </head>
 <body>
-<%
-	MemberVO member = (MemberVO) request.getAttribute("member");
-%>
 	<table>
 		<tr>
 			<th>회원아이디</th>
-			<td><%=member.getMemId()%></td>
+			<td>${member.memId }</td>
 		</tr>
 		<tr>
 			<th>비밀번호</th>
-			<td><%=member.getMemPass()%></td>
+			<td>${member.memPass }</td>
 		</tr>
 		<tr>
 			<th>회원명</th>
-			<td><%=member.getMemName()%></td>
+			<td>${member.memName }</td>
+		</tr>
+		<tr>
+			<th>프로필이미지</th>
+			<td>
+				<img src = "data:image/*;base64,${member.base64Image }"/>
+			</td>
 		</tr>
 		<tr>
 			<th>주민번호1</th>
-			<td><%=member.getMemRegno1()%></td>
+			<td>${member.memRegno1 }</td>
 		</tr>
 		<tr>
 			<th>주민번호2</th>
-			<td><%=member.getMemRegno2()%></td>
+			<td>${member.memRegno2 }</td>
 		</tr>
 		<tr>
 			<th>생일</th>
-			<td><%=member.getMemBir()%></td>
+			<td>${member.memBir }</td>
 		</tr>
 		<tr>
 			<th>우편번호</th>
-			<td><%=member.getMemZip()%></td>
+			<td>${member.memZip }</td>
 		</tr>
 		<tr>
 			<th>주소1</th>
-			<td><%=member.getMemAdd1()%></td>
+			<td>${member.memAdd1 }</td>
 		</tr>
 		<tr>
 			<th>주소2</th>
-			<td><%=member.getMemAdd2()%></td>
+			<td>${member.memAdd2 }</td>
 		</tr>
 		<tr>
 			<th>집전번</th>
-			<td><%=member.getMemHometel()%></td>
+			<td>${member.memHometel }</td>
 		</tr>
 		<tr>
 			<th>회사전번</th>
-			<td><%=member.getMemComtel()%></td>
+			<td>${member.memComtel }</td>
 		</tr>
 		<tr>
 			<th>휴대폰</th>
-			<td><%=member.getMemHp()%></td>
+			<td>${member.memHp }</td>
 		</tr>
 		<tr>
 			<th>이메일</th>
-			<td><%=member.getMemMail()%></td>
+			<td>${member.memMail }</td>
 		</tr>
 		<tr>
 			<th>직업</th>
-			<td><%=member.getMemJob()%></td>
+			<td>${member.memJob }</td>
 		</tr>
 		<tr>
 			<th>취미</th>
-			<td><%=member.getMemLike()%></td>
+			<td>${member.memLike }</td>
 		</tr>
 		<tr>
 			<th>기념일</th>
-			<td><%=member.getMemMemorial() %></td>
+			<td>${member.memMemorial }</td>
 		</tr>
 		<tr>
 			<th>기념일자</th>
-			<td><%=member.getMemMemorialday() %></td>
+			<td>${member.memMemorialday }</td>
 		</tr>
 		<tr>
 			<th>마일리지</th>
-			<td><%=member.getMemMileage() %></td>
+			<td>${member.memMileage }</td>
 		</tr>
 		<tr>
 			<th>탈퇴여부</th>
-			<td><%=member.getMemDelete() %></td>
+			<td>${member.memDelete }</td>
 		</tr>
 		<tr>
 			<td colspan="2">
-				<input type="button" value="회원정보수정" 
-					onclick="location.href='<%=request.getContextPath() %>/member/memberUpdate.do';"
+				<input type="button" value="회원정보수정" class="linkBtn"
+					data-gopage="${pageContext.request.contextPath }/member/memberUpdate.do"
 				/>
-				<input type="button" value="회원탈퇴" 
-					onclick="deleteHandler();"
-				/>
+				<input type="button" value="회원탈퇴" onclick="deleteHandler();" />
 			</td>
 		</tr>
 		<tr>
@@ -119,50 +117,37 @@
 						</tr>
 					</thead>
 					<tbody>
-						<%
-							Set<ProdVO> prodList = member.getProdList();
-							if(prodList.isEmpty()){
-								%>
+						<c:set var="prodList" value="${member.prodList }" />
+						<c:choose>
+							<c:when test="${empty prodList }">
 								<tr>
 									<td colspan="7">구매상품 없음.</td>
 								</tr>
-								<%
-							}else{
-								for(ProdVO prod : prodList){
-									%>
+							</c:when>
+							<c:otherwise>
+								<c:forEach items="${prodList }" var="prod">
 									<tr>
-										<td><%=prod.getProdId() %></td>
-										<td><%=prod.getProdName() %></td>
-										<td><%=prod.getLprodNm() %></td>
-										<td><%=prod.getBuyer().getBuyerName() %></td>
-										<td><%=prod.getBuyer().getBuyerAdd1() %></td>
-										<td><%=prod.getProdCost() %></td>
-										<td><%=prod.getProdPrice() %></td>
-										<td><%=prod.getProdMileage() %></td>
+										<td>${prod.prodId }</td>
+										<td>${prod.prodName }</td>
+										<td>${prod.lprodNm }</td>
+										<td>${prod.buyer.buyerName }</td>
+										<td>${prod.buyer.buyerAdd1 }</td>
+										<td>${prod.prodCost }</td>
+										<td>${prod.prodPrice }</td>
+										<td>${prod.prodMileage }</td>
 									</tr>
-									<%
-								}
-							}
-						%>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
 					</tbody>
 				</table>
 			</td>
 		</tr>
 	</table>
-	<form name="deleteForm" action="<%=request.getContextPath() %>/member/memberDelete.do" method="post">
+	<form name="deleteForm" action="${pageContext.request.contextPath }/member/memberDelete.do" method="post">
 		<input type="hidden" name="memPass" />
 	</form>
 	<script type="text/javascript">
-	<%
-		String message = (String) session.getAttribute("message");
-		if(StringUtils.isNotBlank(message)){
-			%>
-			alert("<%=message %>");
-			<%
-			// flash attribute
-			session.removeAttribute("message");
-		}
-	%>
 		function deleteHandler(){
 			let password = prompt("비밀번호");
 			if(password){
@@ -172,6 +157,7 @@
 			}
 		}
 	</script>
+	<jsp:include page="/includee/postScript.jsp" />
 </body>
 </html>
 

@@ -8,13 +8,66 @@
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 	
-	
-	
 	<context-param>
 		<param-name>contentFolder</param-name>
 		<param-value>d:/contents</param-value>
 	</context-param>
 	
+	
+	<!-- <filter>
+		<filter-name>AuthenticationFilter</filter-name>
+		<filter-class>kr.or.ddit.filter.auth.AuthenticationFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>AuthenticationFilter</filter-name>
+		<url-pattern>/*</url-pattern> 모든 요청을 다 필터링 1 번 필터
+	</filter-mapping>
+	
+	<filter>
+		<filter-name>AuthorizationFilter</filter-name>
+		<filter-class>kr.or.ddit.filter.auth.AuthorizationFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>AuthorizationFilter</filter-name>
+		<url-pattern>/*</url-pattern> 모든 요청을 다 필터링 2 번 필터
+	</filter-mapping> -->
+	
+	
+	
+	<filter>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<filter-class>kr.or.ddit.mvc.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern> <!-- 모든 요청을 다 필터링 --> <!-- 3 번 필터 -->
+	</filter-mapping>
+	
+	<filter>
+		<filter-name>MultipartFilter</filter-name>
+		<filter-class>kr.or.ddit.mvc.fileupload.MultipartFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>MultipartFilter</filter-name>
+		<url-pattern>*.do</url-pattern> <!-- 모든 요청을 다 필터링 --> <!-- 3 번 필터 -->
+	</filter-mapping>
+	
+	<filter>
+		<filter-name>FilterDesc</filter-name>
+		<filter-class>kr.or.ddit.filter.FilterDesc</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>FilterDesc</filter-name>
+		<url-pattern>/*</url-pattern> <!-- 모든 요청을 다 필터링 --> <!-- 3 번 필터 -->
+	</filter-mapping>
+	
+	
+	
+
 	<servlet>
 		<servlet-name>FrontController</servlet-name>
 		<servlet-class>kr.or.ddit.mvc.FrontController</servlet-class>

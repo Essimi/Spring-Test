@@ -28,5 +28,8 @@
 		<mapper resource="kr/or/ddit/mybatis/mappers/Others.xml"/>
 		<mapper resource="kr/or/ddit/mybatis/mappers/Employee.xml"/>
 		<mapper resource="kr/or/ddit/mybatis/mappers/Department.xml"/>
+		<mapper resource="kr/or/ddit/mybatis/mappers/Board.xml"/>
+		<mapper resource="kr/or/ddit/mybatis/mappers/Attatch.xml"/>
+		<mapper resource="kr/or/ddit/mybatis/mappers/Reply.xml"/>
 	</mappers>
 </configuration>

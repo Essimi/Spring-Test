@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.or.ddit.employee.service.EmployeeService;
 import kr.or.ddit.employee.service.EmployeeServiceImpl;
-import kr.or.ddit.mvc.annotation.reslovers.RequestHeader;
+import kr.or.ddit.mvc.annotation.resolvers.RequestHeader;
 import kr.or.ddit.mvc.annotation.stereotype.Controller;
 import kr.or.ddit.mvc.annotation.stereotype.RequestMapping;
 import kr.or.ddit.vo.EmployeeVO;

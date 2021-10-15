@@ -15,7 +15,7 @@ import kr.or.ddit.enumpkg.ServiceResult;
 import kr.or.ddit.member.service.AuthenticateService;
 import kr.or.ddit.member.service.AuthenticateServiceImpl;
 import kr.or.ddit.mvc.annotation.RequestMethod;
-import kr.or.ddit.mvc.annotation.reslovers.RequestParam;
+import kr.or.ddit.mvc.annotation.resolvers.RequestParam;
 import kr.or.ddit.mvc.annotation.stereotype.Controller;
 import kr.or.ddit.mvc.annotation.stereotype.RequestMapping;
 import kr.or.ddit.vo.MemberVO;

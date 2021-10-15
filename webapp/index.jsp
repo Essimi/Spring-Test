@@ -2,8 +2,9 @@
 <%@page import="kr.or.ddit.vo.MemberVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>    
 <%
-	request.setCharacterEncoding("UTF-8");
+	
 	String message = request.getParameter("message");
 %>    
 <!DOCTYPE html>
@@ -11,35 +12,27 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<%
-	if(StringUtils.isNotBlank(message)){
-		%>
-		<script type="text/javascript">
-			alert("<%=message %>");
-		</script>
-		<%
-	}
-%>
+<jsp:include page = "/includee/preScript.jsp"/>
 </head>
 <body>
 <h4>웰컴 페이지</h4>
-<%
-	MemberVO authMember = (MemberVO)session.getAttribute("authMember");
-	if(authMember!=null){
-		%>
-		<a href="<%=request.getContextPath() %>/mypage.do"><%=authMember.getMemName() %></a>
-		<a href="<%=request.getContextPath() %>/login/logout.do" onclick="return clickHandler(event);">로그아웃</a>
+
+<c:set var = "authMember" value = "${sessionScope.authMember }"></c:set>
+
+<c:choose>
+	<c:when test = "${not empty authMember}">
+		<a href="${pageContext.request.contextPath }/mypage.do">${sessionScope.authMember.memName }[${authMember.memRole }]</a>
+		<a href="${pageContext.request.contextPath }/login/logout.do" onclick="return clickHandler(event);">로그아웃</a>
 		<form name="logoutForm" method="post">
 			<input type="hidden" name="_csrftoken" value="token_value" />
 		</form>
-		<%
-	}else{
-		%>
-		<a href="<%=request.getContextPath() %>/login/loginForm.jsp">로그인</a>
-		<a href="<%=request.getContextPath() %>/member/memberInsert.do">회원가입</a>
-		<%
-	}
-%>
+	</c:when>
+	<c:otherwise>
+		<a href="${pageContext.request.contextPath }/login/loginForm.jsp">로그인</a>
+		<a href="${pageContext.request.contextPath }/member/memberInsert.do">회원가입</a>
+	</c:otherwise>
+</c:choose>
+
 <script>
 	function clickHandler(event){
 		event.preventDefault();

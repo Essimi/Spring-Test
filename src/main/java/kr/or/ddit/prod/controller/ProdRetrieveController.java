@@ -15,9 +15,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import kr.or.ddit.mvc.annotation.reslovers.ModelAttribute;
-import kr.or.ddit.mvc.annotation.reslovers.RequestHeader;
-import kr.or.ddit.mvc.annotation.reslovers.RequestParam;
+import kr.or.ddit.mvc.annotation.resolvers.ModelAttribute;
+import kr.or.ddit.mvc.annotation.resolvers.RequestHeader;
+import kr.or.ddit.mvc.annotation.resolvers.RequestParam;
 import kr.or.ddit.mvc.annotation.stereotype.Controller;
 import kr.or.ddit.mvc.annotation.stereotype.RequestMapping;
 import kr.or.ddit.prod.dao.OthersDAO;

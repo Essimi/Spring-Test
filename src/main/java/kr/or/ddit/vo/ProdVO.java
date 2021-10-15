@@ -8,6 +8,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import kr.or.ddit.mvc.fileupload.MultipartFile;
+import kr.or.ddit.validate.constraints.FileMimeChecker;
+import kr.or.ddit.validate.groups.InsertGroup;
 import kr.or.ddit.validate.groups.UpdateGroup;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -42,7 +45,16 @@ public class ProdVO implements Serializable{
 	@NotBlank
 	private String prodOutline;
 	private String prodDetail;
-	@NotBlank
+	
+	@NotNull(groups = InsertGroup.class)
+	@FileMimeChecker(mime = "image")
+	private MultipartFile prodImage;
+	public void setProdImage(MultipartFile prodImage) {
+		if(prodImage.isEmpty()) return;
+		this.prodImage = prodImage;
+	}
+
+	@NotBlank(groups = InsertGroup.class)
 	private String prodImg;
 	@NotNull
 	@Min(0)
